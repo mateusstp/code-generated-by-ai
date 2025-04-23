@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pilar Application{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">Pilar Application</h1>
+            {% if user.is_authenticated %}
+            <div class="relative">
+                <button id="userMenuButton" class="bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none">
+                    {{ user.username }} <i class="fas fa-caret-down ml-1"></i>
+                </button>
+                <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                    <a href="{% url 'preferences' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Preferences</a>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" class="px-4 py-2">
+    {% csrf_token %}
+    <button type="submit" class="w-full text-left text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+</form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+    <div class="flex-grow flex">
+        {% if user.is_authenticated %}
+        <nav class="w-64 bg-gradient-to-b from-indigo-600 to-indigo-400 p-6 min-h-screen shadow-lg rounded-r-xl">
+    <ul>
+        <li class="mb-4">
+            <a href="{% url 'index' %}" class="flex items-center px-4 py-2 text-white hover:bg-indigo-700 rounded transition">
+                <i class="fas fa-home mr-2"></i> Home
+            </a>
+        </li>
+        <li class="mb-4">
+            <a href="{% url 'rule_list' %}" class="flex items-center px-4 py-2 text-white hover:bg-indigo-700 rounded transition">
+                <i class="fas fa-gavel mr-2"></i> Rules
+            </a>
+        </li>
+        <li class="mb-4">
+            <a href="{% url 'project_list' %}" class="flex items-center px-4 py-2 text-white hover:bg-indigo-700 rounded transition">
+                <i class="fas fa-project-diagram mr-2"></i> Projects
+            </a>
+        </li>
+        <li class="mb-4">
+            <a href="{% url 'component_list' %}" class="flex items-center px-4 py-2 text-white hover:bg-indigo-700 rounded transition">
+                <i class="fas fa-cubes mr-2"></i> Components
+            </a>
+        </li>
+        <li class="mb-4">
+            <a href="{% url 'business_unit_list' %}" class="flex items-center px-4 py-2 text-white hover:bg-indigo-700 rounded transition">
+                <i class="fas fa-building mr-2"></i> Business Units
+            </a>
+        </li>
+    </ul>
+</nav>
+        {% endif %}
+        <div class="container mx-auto p-4 flex-grow">
+            <main>
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white p-4 text-center">
+        <p>&copy; 2025 Pilar Application</p>
+    </footer>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var userMenuButton = document.getElementById('userMenuButton');
+            var userMenu = document.getElementById('userMenu');
+
+            if (userMenuButton && userMenu) {
+                userMenuButton.addEventListener('click', function() {
+                    userMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    container_name: pilar_db
+    environment:
+      POSTGRES_DB: pilar_db
+      POSTGRES_USER: pilar_user
+      POSTGRES_PASSWORD: pilar_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

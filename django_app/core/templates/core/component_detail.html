@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-4">Component Details</h1>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Name</p>
+            <p class="font-medium">{{ object.name }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Created</p>
+            <p class="font-medium">{{ object.created_at|date:"F j, Y" }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Last Updated</p>
+            <p class="font-medium">{{ object.updated_at|date:"F j, Y" }}</p>
+        </div>
+        <div class="flex mt-6">
+            <a href="{% url 'component_list' %}" class="mr-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Back to List</a>
+            <a href="{% url 'component_update' object.pk %}" class="mr-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Edit</a>
+            <a href="{% url 'component_delete' object.pk %}" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
