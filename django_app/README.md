@@ -27,7 +27,34 @@ This project is a Django-based web application designed to manage Projects, Rule
    ```bash
    pip install -r requirements.txt
    ```
-4. **Apply migrations:**
+
+4. **Set up PostgreSQL database with Docker Compose:**
+   - Make sure Docker and Docker Compose are installed on your system.
+   - Start the PostgreSQL container:
+     ```bash
+     docker-compose up -d db
+     ```
+   - The default credentials are set in `docker-compose.yml`:
+     - Database: `pilar_db`
+     - User: `pilar_user`
+     - Password: `pilar_password`
+     - Host: `db` (service name)
+     - Port: `5432`
+   - Update your `django_app/settings.py` `DATABASES` section:
+     ```python
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+             'NAME': 'pilar_db',
+             'USER': 'pilar_user',
+             'PASSWORD': 'pilar_password',
+             'HOST': 'db',  # Docker Compose service name
+             'PORT': '5432',
+         }
+     }
+     ```
+
+5. **Apply migrations:**
    ```bash
    python manage.py migrate
    ```
@@ -85,7 +112,34 @@ Este projeto é uma aplicação web baseada em Django para gerenciar Projetos, R
    ```bash
    pip install -r requirements.txt
    ```
-4. **Aplique as migrações:**
+
+4. **Configure o banco de dados PostgreSQL com Docker Compose:**
+   - Certifique-se de que o Docker e o Docker Compose estão instalados em seu sistema.
+   - Inicie o container do PostgreSQL:
+     ```bash
+     docker-compose up -d db
+     ```
+   - As credenciais padrão estão definidas em `docker-compose.yml`:
+     - Banco de dados: `pilar_db`
+     - Usuário: `pilar_user`
+     - Senha: `pilar_password`
+     - Host: `db` (nome do serviço)
+     - Porta: `5432`
+   - Atualize a seção `DATABASES` do seu `django_app/settings.py`:
+     ```python
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+             'NAME': 'pilar_db',
+             'USER': 'pilar_user',
+             'PASSWORD': 'pilar_password',
+             'HOST': 'db',  # Nome do serviço no Docker Compose
+             'PORT': '5432',
+         }
+     }
+     ```
+
+5. **Aplique as migrações:**
    ```bash
    python manage.py migrate
    ```
