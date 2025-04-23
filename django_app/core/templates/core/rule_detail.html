@@ -1,7 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Rule: {{ rule.name }}</h2>
-<p>{{ rule.description }}</p>
-<a href="{% url 'rule_update' rule.id %}">Edit</a> |
-<a href="{% url 'rule_delete' rule.id %}">Delete</a>
+<div class="p-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-4">Rule Details</h1>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Name</p>
+            <p class="font-medium">{{ rule.name }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Description</p>
+            <p class="font-medium">{{ rule.description }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Status</p>
+            <p class="font-medium {% if rule.archived %}text-red-600{% else %}text-green-600{% endif %}">
+                {% if rule.archived %}Archived{% else %}Active{% endif %}
+            </p>
+        </div>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Created</p>
+            <p class="font-medium">{{ rule.created_at|date:"F j, Y" }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">Last Updated</p>
+            <p class="font-medium">{{ rule.updated_at|date:"F j, Y" }}</p>
+        </div>
+        <div class="flex mt-6">
+            <a href="{% url 'rule_list' %}" class="mr-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Back to List</a>
+            <a href="{% url 'rule_update' rule.id %}" class="mr-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Edit</a>
+            {% if rule.archived %}
+                <a href="{% url 'rule_restore' rule.id %}" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Restore</a>
+            {% else %}
+                <a href="{% url 'rule_delete' rule.id %}" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
